@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { SafeAreaView, View, Text, TextInput, Image, ImageBackground, TouchableOpacity, StatusBar } from 'react-native';
+import { SafeAreaView, View, Text, TextInput, Image, ImageBackground, Pressable, TouchableOpacity, StatusBar } from 'react-native';
 
 export default function App() {
   const [mensaje, setMensaje] = useState('');
+  const [bgColor, setBgColor] = useState('blue');
 
   const contactar = () => {
     if (!mensaje.trim()) {
@@ -11,6 +12,19 @@ export default function App() {
     }
     alert(`Mensaje enviado, tu mensaje: ${mensaje}`);
     setMensaje('');
+  };
+
+  const getRandomColor = () => {
+    const letters = '0123456789ABCDEF';
+    let color = '#';
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
+  const handlePress = () => {
+    setBgColor(getRandomColor());
   };
 
   return (
@@ -42,9 +56,10 @@ export default function App() {
             <Text style={{ color: '#FFF' }}>Contactar</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{ backgroundColor: 'blue', padding: 12, borderRadius: 8, alignItems: 'center', width: '100%' }}>
+          <Pressable onPress={handlePress} style={{ backgroundColor: bgColor, padding: 12, borderRadius: 8, alignItems: 'center', width: '100%' }}>
             <Text style={{ color: '#FFF' }}>Ver Portfolio</Text>
-          </TouchableOpacity>
+          </Pressable>
+
         </View>
       </ImageBackground>
     </SafeAreaView>
